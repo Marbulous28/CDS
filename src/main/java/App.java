@@ -11,25 +11,24 @@ public class App {
     String layout = "templates/layout.vtl";
 
     get("/", (request, response) -> {
-      Map<String, Object> model = new HashMap<String, Object>();
+      HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/index.vtl");
-      model.put("tasks", request.session().attribute("tasks"));
+      model.put("cdlist", request.session().attribute("cdlist"));
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/tasks", (request, response) -> {
+    post("/cd", (request, response) -> {
      Map<String, Object> model = new HashMap<String, Object>();
-
-     ArrayList<Task> tasks = request.session().attribute("tasks");
-     if (tasks == null) {
-       tasks = new ArrayList<Task>();
-       request.session().attribute("tasks", tasks);
+     ArrayList<CD> cdlist = request.session().attribute("cdlist");
+     if (cdlist == null) {
+       cdlist = new ArrayList<CD>();
+       request.session().attribute("cdlist", cdlist);
      }
 
-     String description = request.queryParams("description");
-     Task newTask = new Task(description);
-     request.session().attribute("task", newTask);
-     tasks.add(newTask);
+     String title = request.queryParams("title");
+     String artist = request.queryParams("artist");
+     CD newCD = new CD(title, artist);
+     cdlist.add(newCD);
      model.put("template", "templates/success.vtl");
      return new ModelAndView(model, layout);
    }, new VelocityTemplateEngine());

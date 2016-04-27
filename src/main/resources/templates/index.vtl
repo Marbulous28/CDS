@@ -1,20 +1,22 @@
-<h1>Task list!</h1>
-
-#if ($tasks)
+<h1>CDS!</h1>
+#if ($cdlist)
   <ul>
-    #foreach ($task in $tasks)
-      <li>$task.getDescription()</li>
+    #foreach ($cd in $cdlist)
+      <li>$cd.getTitle() : $cd.getArtist()</li>
     #end
   </ul>
+
 #else
-  <p>No tasks!</p>
+  <p>No CD!</p>
+  <br>
+  <br>
 #end
+<form action="/cd" method="post">
+  <label for="title">New CD Title</label>
+  <input id="title" name="title" type="text">
 
-<p>Add a new Task:</p>
+  <label for="artist">Artist</label>
+  <input id="artist" name="artist" type="text">
 
-<form action="/tasks" method="post">
-  <label for="description">Task Description</label>
-  <input id="description" name="description" type="text">
-
-  <button type="submit" class="btn btn-default">Add task</button>
+  <button type="submit" class="btn btn-danger">Add CD</button>
 </form>
